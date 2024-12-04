@@ -1,0 +1,294 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - mern-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: server
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - mongo
+    environment: 
+      - MONGO_URL=mongodb://mongo:27017
+    volumes:
+      - ./server:/index
+    networks:
+      - mern-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    volumes:
+      - ./client:/src/app
+    networks:
+      - mern-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  mern-network:
+    driver: bridge
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# version: '3'
+# services:
+
+#   mongo:
+#     image: mongo
+#     container_name: mongo
+#     ports:
+#       - "27017:27017"
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: example
+#     volumes:
+#       - mongodb_data:/data/db
+#     networks:
+#       - mern-network
+
+#   server:
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile
+#     container_name: server
+#     restart: always
+#     ports:
+#       - "8000:8000"
+#     depends_on: 
+#       - mongo
+#     environment: 
+#       - MONGO_URL=mongodb://mongo:27017
+#     volumes:
+#       - ./server:/usr/src/app
+#     networks:
+#       - mern-network
+
+#   client:
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile
+#     container_name: client
+#     restart: always
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - server
+#     volumes:
+#       - ./client:/src/app
+#     networks:
+#       - mern-network
+
+# volumes:
+#   mongodb_data:
+#     driver: local
+
+# networks:
+#   mern-network:
+#     driver: bridge
+
+
+
+
+
+
+
+
+
+
+
+# version: '3'
+# services:
+
+#   server:
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile
+#     container_name: server
+#     restart: always
+#     ports:
+#       - "8000:8000"
+#     depends_on: 
+#       - mongo
+#     environment: 
+#     MONGO_URL: mongodb://localhost:27017
+
+#     volumes:
+#       - ./server:/index
+
+ 
+#   client:
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile
+#     container_name: client
+#     restart: always
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - client
+#     volumes:
+#       - ./client:/src/app
+
+#   mongo:
+#     image: mongo
+#     container_name: mongo
+#     ports:
+#       - "27017:27017"
+#     environment: 
+#       - mongodb://localhost:27017
+
+# volumes:
+#   mongodb_data:
+#     driver: local
+
+# # Define custom network
+# networks:
+#   mern-network:
+#     driver: bridge
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # docker-compose.yml
+# version: '3.8'
+# services:
+
+#   # Frontend React service
+#   frontend:
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile
+#     container_name: myclient
+#     ports:
+#       - "3000:3000"
+#     volumes:
+#       - ./client:/app
+#       - /app/node_modules
+#     stdin_open: true
+#     tty: true
+#     depends_on:
+#       - backend
+#     environment:
+#       - REACT_APP_API_URL=http://localhost:8000
+#     networks:
+#       - mern-network
+#     restart: unless-stopped
+
+#   # Backend Node/Express service
+#   backend:
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile
+#     container_name: mybackend
+#     ports:
+#       - "8000:8000"
+#     volumes:
+#       - ./server:/app
+#       - /app/node_modules
+#     depends_on:
+#       - mongodb
+#     environment:
+#       # - MONGODB_URI=mongodb://mongodb:27017/mern
+#       - MONGODB_URI=mongodb://mongodb:27017/mern
+#       - PORT=8000
+#     networks:
+#       - mern-network     
+#     restart: always
+
+
+
+#   # MongoDB service
+#   mongodb:
+#     image: mongo:latest
+#     container_name: mern
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongodb_data:/data/db
+#     networks:
+#       - mern-network
+#     restart: unless-stopped
+
+# # Define named volume for MongoDB data
+# volumes:
+#   mongodb_data:
+#     driver: local
+
+# # Define custom network
+# networks:
+#   mern-network:
+#     driver: bridge
+
+
