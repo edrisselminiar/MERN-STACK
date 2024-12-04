@@ -20,3 +20,4 @@ This is a simple MERN (MongoDB, Express.js, React.js, Node.js) stack application
 
 For a step-by-step tutorial on how to build this MERN stack application, check out the YouTube channel [CodeWithArjun](https://www.youtube.com/codewitharjun).
 
+# dockerize-MERN-STACK-APP
